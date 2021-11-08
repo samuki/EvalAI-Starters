@@ -12,9 +12,8 @@ def run():
     current_working_directory = get_curr_working_dir()
     sys.path.append("{}".format(current_working_directory))
     sys.path.append("{}/challenge_data/challenge_1".format(current_working_directory))
-    testpath = "../../Uni/Master/EEG/"
-    reference = testpath + "test_y.txt"
-    prediction = testpath + "prediction.txt"
+    reference = "annotations/test_y.txt"
+    prediction ="prediction.txt"
     challenge_id = 1
     challenge_phase = "test"  # Add the challenge phase codename to be tested
     #annotation_file_path = "{}/annotations/test_annotations_testsplit.json".format(
@@ -51,7 +50,7 @@ def run():
         "id": 123,
         "submitted_at": u"2017-03-20T19:22:03.880652Z",
     }
-    print("SUUUB ", user_submission_file_path)
+    #print("SUUUB ", user_submission_file_path)
     EVALUATION_SCRIPTS[challenge_id].evaluate(
         annotation_file_path,
         user_submission_file_path,

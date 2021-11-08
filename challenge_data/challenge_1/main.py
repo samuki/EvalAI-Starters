@@ -1,4 +1,3 @@
-import random
 import pandas as pd
 
 def calc_accuracy(results):
@@ -80,4 +79,5 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
         # To display the results in the result file
         output["submission_result"] = output["result"][0]
         print("Completed evaluation for Test Phase")
+    print(output)
     return output
