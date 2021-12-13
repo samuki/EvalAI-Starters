@@ -1,5 +1,22 @@
-import random
+#import pandas as pd
+import json
+from sklearn.metrics import f1_score
+from sklearn.metrics import accuracy_score
+import numpy as np
 
+def calc_accuracy(y_pred, y_true):
+    return accuracy_score(y_true, y_pred)
+
+def calc_F1(y_pred, y_true):
+    return f1_score(y_true, y_pred, average='macro')
+
+def calc_means(user_predictions, reference):
+    accuracies = []
+    f1s = []
+    for subj in reference:
+        accuracies.append(calc_accuracy(user_predictions[subj], reference[subj]))
+        f1s.append(calc_F1(user_predictions[subj], reference[subj]))
+    return {"Accuracy": np.mean(accuracies), "F1-score": np.mean(f1s)}
 
 def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwargs):
     print("Starting Evaluation.....")
@@ -39,35 +56,26 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
             'submitted_at': u'2017-03-20T19:22:03.880652Z'
         }
     """
-    print("JO")
+    #df = pd.read_json(user_submission_file)
+    print(test_annotation_file)
+    with open(test_annotation_file, "r") as f: 
+        reference = json.load(f)
+    with open(user_submission_file, "r") as file: 
+        user_predictions = json.load(file)
+    results = calc_means(user_predictions, reference)
     output = {}
-    if phase_codename == "dev":
-        print("Evaluating for Dev Phase")
-        output["result"] = [
-            {
-                "train_split": {
-                    "Accuracy": random.randint(0, 99),
-                }
-            }
-        ]
-        # To display the results in the result file
-        output["submission_result"] = output["result"][0]["train_split"]
-        print("Completed evaluation for Dev Phase")
-    elif phase_codename == "test":
-        print("Evaluating for Test Phase")
-        output["result"] = [
-            {
-                "train_split": {
-                    "Accuracy": random.randint(0, 99)
-                }
-            },
-            {
-                "test_split": {
-                    "Accuracy": random.randint(0, 99)
-                }
-            },
-        ]
-        # To display the results in the result file
-        output["submission_result"] = output["result"][0]
-        print("Completed evaluation for Test Phase")
+
+    print("Evaluating for Test Phase")
+    output["result"] = [
+    {
+        "test_split": {
+            "Accuracy": results["Accuracy"],
+            "F1-score": results["F1-score"]
+        }
+    },
+    ]
+    # To display the results in the result file
+    output["submission_result"] = output["result"][0]
+    print("Completed evaluation for Test Phase")
+    print(output)
     return output

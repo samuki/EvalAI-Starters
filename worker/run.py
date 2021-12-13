@@ -1,6 +1,7 @@
 import importlib
 import os
 import sys
+import json
 
 
 def get_curr_working_dir():
@@ -12,8 +13,8 @@ def run():
     current_working_directory = get_curr_working_dir()
     sys.path.append("{}".format(current_working_directory))
     sys.path.append("{}/challenge_data/challenge_1".format(current_working_directory))
-    reference = "annotations/test_y.txt"
-    prediction ="prediction.txt"
+    reference = "reference.json"
+    prediction ="prediction.json"
     challenge_id = 1
     challenge_phase = "test"  # Add the challenge phase codename to be tested
     #annotation_file_path = "{}/annotations/test_annotations_testsplit.json".format(
