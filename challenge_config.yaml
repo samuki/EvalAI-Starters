@@ -1,6 +1,6 @@
 # If you are not sure what all these fields mean, please refer our documentation here:
 # https://evalai.readthedocs.io/en/latest/configuration.html
-title: ReadingTaskClassificationBenchmark 
+title: ReadingTaskClassificationBenchmark. 
 short_description: Classify between task specific reading (TSR) and normal reading (NR)
 description: templates/description.html
 evaluation_details: templates/evaluation_details.html
